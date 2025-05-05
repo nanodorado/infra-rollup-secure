@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Infraestructura para nodos de rollup seguros y escalables en AWS
 
 Este repositorio es un template para desplegar infraestructura reproducible para nodos blockchain tipo rollup (como Optimism, zkSync, Celestia Light Nodes) usando Terraform, Kubernetes, Helm y herramientas de seguridad cloud-native.
@@ -64,3 +65,6 @@ bash ../../scripts/health-check.sh
 Este repositorio está diseñado para mostrar cómo aplicar las mejores prácticas de DevSecOps e infraestructura en el contexto de Web3 y escalar nodos blockchain de forma segura.
 
 > Pull requests y sugerencias son bienvenidas.
+=======
+# infra-rollup-secure
+>>>>>>> 69e185c9106b48a863eea12159dd040ecaa355d2
