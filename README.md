@@ -1,70 +1,97 @@
-<<<<<<< HEAD
-# Infraestructura para nodos de rollup seguros y escalables en AWS
+# 🛠️ Infra Rollup Secure
 
-Este repositorio es un template para desplegar infraestructura reproducible para nodos blockchain tipo rollup (como Optimism, zkSync, Celestia Light Nodes) usando Terraform, Kubernetes, Helm y herramientas de seguridad cloud-native.
+Infrastructure template for deploying secure and observable Ethereum-based rollup nodes (e.g. Geth, zkSync, Celestia) using **Terraform**, **Kubernetes**, **Helm**, and **Grafana** on **AWS**.
 
-## Contenido
-
-```
-infra-rollup-secure/
-├── terraform/                  # Infraestructura base en AWS
-│   ├── main.tf                 # Recursos principales: VPC, EKS, IAM
-│   ├── variables.tf            # Variables reutilizables
-│   └── modules/                # Módulos reusables (eks, s3, iam)
-├── helm/                       # Charts para nodos rollup
-│   └── geth/                   # Ejemplo: nodo Ethereum Geth
-├── scripts/                    # Utilidades y tareas de mantenimiento
-│   └── health-check.sh         # Verifica estado del nodo RPC
-├── observability/              # Dashboards y alertas
-│   └── grafana-dashboards/     # Dashboards para Prometheus+Grafana
-├── README.md                   # Instrucciones y documentación
-└── .github/workflows/          # CI para lint, terraform fmt, checkov
-```
-
-## Características
-
-- Deploy automatizado en AWS con Terraform (VPC, EKS, IAM)
-- Helm charts personalizables para nodos (Geth, zkNode, Celestia)
-- Monitoreo con Prometheus y dashboards de Grafana
-- Escaneo de seguridad con Checkov y trivy
-- Buenas prácticas: RBAC, namespace isolation, IAM roles por pod
-- Soporte para integración con Cloudflare (WAF, DNS) y alerta vía Slack
-
-## Cómo empezar
-
-```bash
-# Inicializa infraestructura
-cd terraform
-terraform init && terraform apply
-
-# Despliega Helm chart para nodo
-cd ../helm/geth
-helm install geth .
-
-# Ejecuta chequeo de salud
-bash ../../scripts/health-check.sh
-```
-
-## Observabilidad
-- Dashboards listos para nodos Ethereum / Celestia
-- Alertas configurables por Prometheus rules y webhook
-
-## Seguridad
-- IAM con principio de menor privilegio
-- Restricciones de red entre servicios
-- Escaneo continuo con Checkov en CI/CD
-- Kubernetes hardened: no privileged pods, contextos restringidos
-
-## En desarrollo
-- Integración con zkNode y Celestia light node
-- Módulo de backup automatizado
-- Validación de cambios con OPA (Open Policy Agent)
+> Designed for DevSecOps portfolios, Web3 infrastructure engineers, and blockchain scalability projects.
 
 ---
 
-Este repositorio está diseñado para mostrar cómo aplicar las mejores prácticas de DevSecOps e infraestructura en el contexto de Web3 y escalar nodos blockchain de forma segura.
+## 🔍 Project Structure
 
-> Pull requests y sugerencias son bienvenidas.
-=======
-# infra-rollup-secure
->>>>>>> 69e185c9106b48a863eea12159dd040ecaa355d2
+```
+infra-rollup-secure/
+├── terraform/                # Base AWS infra (VPC, EKS)
+├── helm/geth/                # Helm chart to deploy Geth node
+├── scripts/                  # Health checks and ops utilities
+├── observability/            # Grafana dashboards for node metrics
+└── .github/workflows/        # (Optional) CI/CD integration
+```
+
+---
+
+## 🚀 Features
+
+- Infrastructure as Code with **Terraform**
+- Helm chart to deploy a **Geth full node**
+- Kubernetes **RBAC**, isolated namespaces, resource limits
+- Optional **persistent volume** for blockchain data
+- Prometheus-ready metrics + Grafana dashboard
+- Shell script to check node sync status via `eth_syncing`
+
+---
+
+## ⚙️ Prerequisites
+
+- AWS CLI + credentials configured
+- Terraform ≥ 1.3
+- Helm ≥ 3
+- kubectl connected to an EKS cluster
+
+---
+
+## 🧪 Getting Started
+
+### 1. Provision Infrastructure
+
+```bash
+cd terraform
+terraform init
+terraform apply -auto-approve
+```
+
+> This will deploy the EKS cluster and supporting AWS resources.
+
+### 2. Deploy the Geth Node
+
+```bash
+cd ../helm/geth
+helm install geth . --values values.yaml
+```
+
+---
+
+## 🩺 Check Node Status
+
+```bash
+bash ../scripts/health-check.sh
+```
+
+Expected output:
+```
+✅ Node is fully synced.
+```
+
+---
+
+## 📊 Observability
+
+The Grafana dashboard includes:
+
+- Block sync progress
+- Peer count
+- Memory/CPU usage
+- JSON-RPC health
+
+Import the example JSON from `observability/grafana-dashboards/` into your Grafana instance.
+
+---
+
+## 🛡️ Security Best Practices
+
+- IAM permissions based on least privilege
+- No privileged pods / no hostPath mounts
+- PodSecurityContext set to non-root
+- Volume access set to `ReadWriteOnce`
+- Supports future OPA/Checkov integration
+
+---

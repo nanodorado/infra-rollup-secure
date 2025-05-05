@@ -1,5 +1,33 @@
 replicaCount: 1
+
 image:
   repository: ethereum/client-go
   tag: stable
   pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 8545
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 250m
+    memory: 256Mi
+
+persistence:
+  enabled: true
+  storageClass: "standard"
+  accessMode: ReadWriteOnce
+  size: 10Gi
+
+node:
+  networkId: 1
+  syncMode: "fast"
+  http:
+    enabled: true
+    port: 8545
+    corsdomain: "*"
+    apis: "eth,net,web3"
