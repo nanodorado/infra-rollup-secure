@@ -1,0 +1,5 @@
+replicaCount: 1
+image:
+  repository: ethereum/client-go
+  tag: stable
+  pullPolicy: IfNotPresent
