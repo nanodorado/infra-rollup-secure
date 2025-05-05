@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "geth.fullname" . }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "geth.name" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "geth.name" . }}
+    spec:
+      containers:
+        - name: geth
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          ports:
+            - containerPort: {{ .Values.service.port }}
+          args:
+            - "--syncmode={{ .Values.node.syncMode }}"
+            - "--http"
+            - "--http.addr=0.0.0.0"
+            - "--http.port={{ .Values.node.http.port }}"
+            - "--http.api={{ .Values.node.http.apis }}"
